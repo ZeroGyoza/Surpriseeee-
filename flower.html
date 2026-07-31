@@ -15,44 +15,26 @@
 
   <!-- Musik background -->
   <audio id="bgMusic" loop>
-    <source src="audio/audio.mp3" type="audio/mpeg">
+    <source src="audio/audio2.mp3" type="audio/mpeg">
   </audio>
 
-  <button id="playBtn"
-    style="position:fixed; bottom:20px; right:20px; z-index:999; padding:10px 16px; border-radius:20px; border:none; background:#39c6d6; color:#111; font-weight:600; cursor:pointer;">
-    🔊 Putar Musik
-  </button>
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const audio = document.getElementById('bgMusic');
-      const btn = document.getElementById('playBtn');
-      const startTime = 188;
-      const endTime = 233;
+    const audio = document.getElementById('bgMusic');
+    // const startTime = 188; love me harder
+    // const endTime = 233;   
 
-      audio.addEventListener('loadedmetadata', () => {
-        audio.currentTime = startTime;
-      });
+    const startTime = 135; //Love you like a love song
+    const endTime = 180;   
 
-      audio.addEventListener('timeupdate', () => {
-        if (audio.currentTime >= endTime) {
-          audio.currentTime = startTime;
-        }
-      });
+    audio.addEventListener('loadedmetadata', () => {
+      audio.currentTime = startTime;
+      audio.play();
+    });
 
-      const tryPlay = audio.play();
-      if (tryPlay !== undefined) {
-        tryPlay.then(() => {
-          btn.style.display = 'none';
-        }).catch(() => {
-          btn.style.display = 'inline-block'; // pastiin tombol keliatan
-        });
+    audio.addEventListener('timeupdate', () => {
+      if (audio.currentTime >= endTime) {
+        audio.currentTime = startTime; // loop balik ke start
       }
-
-      btn.addEventListener('click', () => {
-        audio.play();
-        btn.style.display = 'none';
-      });
     });
   </script>
 
