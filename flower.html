@@ -24,34 +24,35 @@
   </button>
 
   <script>
-    const audio = document.getElementById('bgMusic');
-    const btn = document.getElementById('playBtn');
-    const startTime = 188; // mulai dari detik ke-188
-    const endTime = 233;   // loop balik di detik ke-233
+    document.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('bgMusic');
+      const btn = document.getElementById('playBtn');
+      const startTime = 188;
+      const endTime = 233;
 
-    audio.addEventListener('loadedmetadata', () => {
-      audio.currentTime = startTime;
-    });
-
-    audio.addEventListener('timeupdate', () => {
-      if (audio.currentTime >= endTime) {
+      audio.addEventListener('loadedmetadata', () => {
         audio.currentTime = startTime;
-      }
-    });
-
-    // coba autoplay dulu (di desktop biasanya lolos)
-    const tryPlay = audio.play();
-    if (tryPlay !== undefined) {
-      tryPlay.then(() => {
-        btn.style.display = 'none';
-      }).catch(() => {
-        // autoplay diblokir (biasanya di HP), tombol tetep muncul
       });
-    }
 
-    btn.addEventListener('click', () => {
-      audio.play();
-      btn.style.display = 'none';
+      audio.addEventListener('timeupdate', () => {
+        if (audio.currentTime >= endTime) {
+          audio.currentTime = startTime;
+        }
+      });
+
+      const tryPlay = audio.play();
+      if (tryPlay !== undefined) {
+        tryPlay.then(() => {
+          btn.style.display = 'none';
+        }).catch(() => {
+          btn.style.display = 'inline-block'; // pastiin tombol keliatan
+        });
+      }
+
+      btn.addEventListener('click', () => {
+        audio.play();
+        btn.style.display = 'none';
+      });
     });
   </script>
 
