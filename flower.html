@@ -18,20 +18,40 @@
     <source src="audio/audio.mp3" type="audio/mpeg">
   </audio>
 
+  <button id="playBtn"
+    style="position:fixed; bottom:20px; right:20px; z-index:999; padding:10px 16px; border-radius:20px; border:none; background:#39c6d6; color:#111; font-weight:600; cursor:pointer;">
+    🔊 Putar Musik
+  </button>
+
   <script>
     const audio = document.getElementById('bgMusic');
-    const startTime = 188; // mulai dari detik ke-30
-    const endTime = 233;   // berhenti/loop di detik ke-60
+    const btn = document.getElementById('playBtn');
+    const startTime = 188; // mulai dari detik ke-188
+    const endTime = 233;   // loop balik di detik ke-233
 
     audio.addEventListener('loadedmetadata', () => {
       audio.currentTime = startTime;
-      audio.play();
     });
 
     audio.addEventListener('timeupdate', () => {
       if (audio.currentTime >= endTime) {
-        audio.currentTime = startTime; // loop balik ke start
+        audio.currentTime = startTime;
       }
+    });
+
+    // coba autoplay dulu (di desktop biasanya lolos)
+    const tryPlay = audio.play();
+    if (tryPlay !== undefined) {
+      tryPlay.then(() => {
+        btn.style.display = 'none';
+      }).catch(() => {
+        // autoplay diblokir (biasanya di HP), tombol tetep muncul
+      });
+    }
+
+    btn.addEventListener('click', () => {
+      audio.play();
+      btn.style.display = 'none';
     });
   </script>
 
